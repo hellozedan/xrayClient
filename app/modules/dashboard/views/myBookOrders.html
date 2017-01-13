@@ -1,0 +1,110 @@
+﻿<!--
+Author: Ranjithprabhu K
+Page Description: Orders page
+Date: 15 Jan 2016
+-->
+<style>
+
+    .table th:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .table .action-column{
+        width: 230px;
+    }
+    .table .action-column:hover{
+        text-decoration: none;
+        cursor: default;
+    }
+    .table tfoot .pagination{
+        float: right;
+        margin: 0;
+    }
+    .table tfoot .pagination li{
+        cursor: pointer;
+    }
+    .table tfoot select{
+        width: 90px;
+        float: right;
+        margin-right: 8px;
+    }
+</style>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+          My Orders
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Book Orders</li>
+          </ol>
+        </section>
+
+
+
+<table>
+    <tr>
+        <td>
+            <button class="btn btn-default"  ng-click="vm.getStatusFilter('')">
+                All</button>
+        </td>
+        <td>
+            <button class="btn btn-primary"  ng-click="vm.getStatusFilter('Pending')">
+                Pending</button>
+        </td> <td>
+        <button class="btn btn-success"  ng-click="vm.getStatusFilter('InProgress')">
+            InProgress</button>
+    </td> <td>
+        <button class="btn btn-info" ng-click="vm.getStatusFilter('OnGoing')">
+            OnGoing</button>
+    </td> <td>
+        <button  class="btn btn-warning" ng-click="vm.getStatusFilter('Finished')">
+            Finished</button>
+    </td> <td>
+        <button class="btn btn-danger"  ng-click="vm.getStatusFilter('Cancelled')">
+            Cancelled</button>
+    </td>
+    </tr>
+</table>
+<table class="table table-hover table-bordered" st-table>
+    <thead>
+    <tr>
+
+
+        <th ng-click="predicate='FirstName'; reverse=!reverse">Book Title</th>
+        <th ng-click="predicate='FirstName'; reverse=!reverse">Issue Date</th>
+        <th ng-click="predicate='FirstName'; reverse=!reverse">Due Date</th>
+        <th ng-click="predicate='FirstName'; reverse=!reverse">Finish Date</th>
+        <th ng-click="predicate='FirstName'; reverse=!reverse">Status</th>
+
+
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="bookOrdering in vm.booksOrderingArray | filter: vm.searchStatus">
+
+
+
+
+
+
+        <td>  {{bookOrdering.bookTitle}} </td>
+        <td>  {{bookOrdering.issueDate}} </td>
+        <td> {{bookOrdering.dueDate }}</td>
+        <td>  {{bookOrdering.finishDate}} </td>
+        <td ng-class="{'success':bookOrdering.status == 'InProgress' || bookOrdering.status == 'Pending' , 'danger':  bookOrdering.status == 'Cancelled',
+        'info':  bookOrdering.status == 'OnGoing', 'warning':  bookOrdering.status == 'Finished'}">  {{bookOrdering.status}} </td>
+
+
+
+    </tr>
+
+
+
+
+    </tbody>
+
+
+</table>

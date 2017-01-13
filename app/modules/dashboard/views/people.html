@@ -1,0 +1,510 @@
+﻿<!--
+Author: Ranjithprabhu K
+Page Description: People page
+Date: 15 Jan 2016
+-->
+<style>
+
+    .table th:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .table .action-column{
+        width: 230px;
+    }
+    .table .action-column:hover{
+        text-decoration: none;
+        cursor: default;
+
+    }
+    .table tfoot .pagination{
+        float: right;
+        margin: 0;
+    }
+    .table tfoot .pagination li{
+
+        cursor: pointer;
+    }
+    .table tfoot select{
+
+        width: 90px;
+        float: right;
+        margin-right: 8px;
+    }
+</style>
+<style>
+
+    .box{
+        width: 300px;
+        height: 30px;
+    }
+
+    .container-1{
+        width: 300px;
+        vertical-align: middle;
+        white-space: nowrap;
+        position: relative;
+    }
+    .container-1 input#search{
+        width: 300px;
+        height: 50px;
+        background: #2b303b;
+        border: none;
+        font-size: 10pt;
+        float: left;
+        color: #63717f;
+        padding-left: 45px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .container-1 input#search::-webkit-input-placeholder {
+        color: #65737e;
+    }
+
+    .container-1 input#search:-moz-placeholder { /* Firefox 18- */
+        color: #65737e;
+    }
+
+    .container-1 input#search::-moz-placeholder {  /* Firefox 19+ */
+        color: #65737e;
+    }
+
+    .container-1 input#search:-ms-input-placeholder {
+        color: #65737e;
+    }
+
+
+    .container-1 .icon{
+        position: absolute;
+        top: 50%;
+        margin-left: 17px;
+        margin-top: 17px;
+        z-index: 1;
+        color: #4f5b66;
+    }
+</style>
+
+<style>
+
+
+    table.ex2 {
+        border-collapse: separate;
+        border-spacing: 1px 1px;
+    }
+</style>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+        People Information
+          </h1>
+            <br>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">People</li>
+          </ol>
+        </section>
+
+
+<div class="box">
+    <div class="container-1">
+        <span class="icon"><i class="fa fa-search"></i></span>
+        <input ng-model="vm.searchFilter" type="search" id="search" placeholder="Search..." />
+    </div>
+</div>
+<br>
+
+<table class="table table-hover table-bordered" st-table>
+<thead>
+<tr>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">ID</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Full Name</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Gender</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Email</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Address</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Birthday</th>
+    <th ng-click="predicate='FirstName'; reverse=!reverse">Is Admin</th>
+
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="person in vm.peopleArray | filter: vm.searchFilter">
+    <td>{{person.id}}</td>
+
+    <td>{{person.firstName}}  &nbsp;{{person.lastName}} </td>
+    <td>  <span ng-show="person.gender=='Female'" style="color: white; background: hotpink ; font-weight: bold"> &#9792;</span>    <span ng-show="person.gender=='Male'" style="background: lightskyblue; color: white; font-weight: bold"> &#x2642;</span>  </td>
+    <td>{{person.email}}</td>
+  <td>{{person.address }}</td>
+  <td>{{person.birthday |date:'yyyy-MM-dd' }}</td>
+    <td ng-class="{'success': person.isAdmin == true, 'danger':person.isAdmin == false}">
+        {{person.isAdmin }}</td>
+    <td class="action-column">
+        <button type="button" class="btn btn-info btn-sm"  ng-click="vm.showEditDialog($event,person)"><span class="glyphicon glyphicon-edit"></span>&nbsp; Edit</button>
+
+        <button type="button" class="btn btn-danger btn-sm"  ng-click="vm.showDeleteDialog($event,person)"><span class="glyphicon glyphicon-trash"></span> &nbsp; Delete</button>
+    </td>
+
+</tr>
+</tbody>
+    <button type="button" class="btn btn-info btn-sm" ng-click="vm.showAdvanced($event)">Add New Person</button>
+
+</table>
+
+
+<script type="text/ng-template" id="dialog1.tmpl.html"><md-dialog aria-label="New Person"  ng-cloak>
+<form>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>New Person</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+
+
+
+
+            <form class="form-horizontal" role="form">
+                <table class="ex2">
+                    <tr>
+                        <td colspan="2">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">ID:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" ng-model="person.id" type="text">
+                        </div>
+                    </div>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">firstName:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" ng-model="person.firstName" type="text">
+                        </div>
+                    </div>
+                            </td>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">lastName:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" ng-model="person.lastName" type="text">
+                        </div>
+                    </div>
+                        </td>
+</tr>
+                    <tr>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">gender:</label>
+                        <div class="col-lg-6">
+                            <form action="">
+                                <INPUT TYPE="radio" Name="Browser"  ng-model="person.gender" ng-checked="person.gender=='Male'" Value ="Male" >Male
+                                &nbsp; &nbsp;
+                                <INPUT TYPE="radio" Name= "Browser"  ng-model="person.gender" ng-checked="person.gender=='Female'" Value ="Female">Female
+                            </form>
+
+                        </div>
+                    </div>
+                            </td>
+
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">email:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" ng-model="person.email" type="text">
+                        </div>
+                    </div>
+                        </td>
+</tr>
+                    <tr>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">address:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" ng-model="person.address" type="text">
+                        </div>
+                    </div>
+                            </td>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">birthday:</label>
+                        <div class="col-lg-9">
+                            <input  type="date" class="form-control" ng-model="person.birthday" type="text">
+                        </div>
+                    </div>
+                        </td>
+</tr>
+                    <tr>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">password:</label>
+                        <div class="col-lg-6">
+                            <input class="form-control"  type="password" ng-model="person.password" type="text">
+                        </div>
+                    </div>
+                            </td>
+                        <td>
+                    <div class="row">
+                        <label class="col-lg-3 control-label">isAdmin:</label>
+                        <div class="col-lg-9">
+                            <form action="">
+                                <INPUT TYPE="radio" Name="Browser"  ng-model="person.isAdmin"  Value ="true" ng-checked="person.isAdmin==true" >Admin
+                                &nbsp; &nbsp;
+                                <INPUT TYPE="radio" Name= "Browser"  ng-model="person.isAdmin"  Value ="false" ng-checked="person.isAdmin==false">Not Admin
+                            </form>
+                        </div>
+                    </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <!--      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                  More on Wikipedia
+              </md-button>
+              <span flex></span>-->
+        <md-button ng-click="CreateNewPeople()">
+            Save
+        </md-button>
+        <md-button ng-click="answer('useful')">
+            Close
+        </md-button>
+    </md-dialog-actions>
+       <!-- <label>
+            person= {{person | json}}
+        </label>-->
+
+</form>
+</md-dialog>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/ng-template" id="dialog2.tmpl.html"><md-dialog aria-label="Edit Person"  ng-cloak>
+<form>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit Person</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+
+
+
+
+            <form class="form-horizontal" role="form">
+                <table class="ex2">
+                    <tr>
+                        <td colspan="2">
+                            <div class="row">
+                                <label class="col-lg-2 control-label">ID: </label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" ng-model="personForEdit.id"  type="text" disabled  >
+                                </div>
+                            </div>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">firstName:</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" ng-model="personForEdit.firstName"  type="text">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">lastName:</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" ng-model="personForEdit.lastName" type="text">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">gender:</label>
+                                <div class="col-lg-9">
+                                   <!-- <input class="form-control"  ng-model="personForEdit.gender" type="text">-->
+                                    <form action="">
+                                    <INPUT TYPE="radio" Name="Browser"  ng-model="personForEdit.gender" ng-checked="personForEdit.gender=='Male'" Value ="Male" >Male
+                                        &nbsp; &nbsp;
+                                    <INPUT TYPE="radio" Name= "Browser"  ng-model="personForEdit.gender" ng-checked="personForEdit.gender=='Female'" Value ="Female">Female
+                                        </form>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">email:</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" ng-model="personForEdit.email" type="text">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">address:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" ng-model="personForEdit.address" type="text">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">birthday:</label>
+                                <div class="col-lg-9">
+                                    <input type="date" class="form-control" ng-model="personForEdit.birthday" >
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">password:</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control"  type="password" ng-model="personForEdit.password" type="text">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <label class="col-lg-3 control-label">isAdmin:</label>
+                                <div class="col-lg-9">
+                                    <!-- <input class="form-control" ng-model="personForEdit.isAdmin" type="text">-->
+                                    <!--   <input class="form-control" ng-model="person.isAdmin" type="text">-->
+                                    <form action="">
+                                    <INPUT TYPE="radio" Name="Browser"  ng-model="personForEdit.isAdmin"  Value ="true" ng-checked="personForEdit.isAdmin==true" >Admin
+                                        &nbsp; &nbsp;
+                                    <INPUT TYPE="radio" Name= "Browser"  ng-model="personForEdit.isAdmin"  Value ="false" ng-checked="personForEdit.isAdmin==false">Not Admin
+                                        </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <!--      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                  More on Wikipedia
+              </md-button>
+              <span flex></span>-->
+        <md-button ng-click="EditPerson()">
+            Save
+        </md-button>
+        <md-button ng-click="answer('useful')">
+            Close
+        </md-button>
+    </md-dialog-actions>
+  <!--   <label>
+         person= {{personForEdit | json}}
+     </label>-->
+
+</form>
+</md-dialog>
+</script>
+
+
+
+
+
+
+<script type="text/ng-template" id="dialog3.tmpl.html"><md-dialog aria-label="Delete Person"  ng-cloak>
+<form>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Delete Person</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+
+
+
+
+            <form class="form-horizontal" role="form">
+
+
+                <label> Are You suye you want to delete Person: {{personForDelete.firstName}} &nbsp {{personForDelete.lastName}} &nbsp ?</label>
+
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <!--      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                  More on Wikipedia
+              </md-button>
+              <span flex></span>-->
+        <md-button ng-click="DeletePerson()">
+            Yes
+        </md-button>
+        <md-button ng-click="answer('useful')">
+            No
+        </md-button>
+    </md-dialog-actions>
+    <!--   <label>
+           person= {{personForEdit | json}}
+       </label>-->
+
+</form>
+</md-dialog>
+</script>
+
+
+
+
+
+
+
+
+

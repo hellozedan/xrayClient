@@ -1,0 +1,423 @@
+﻿<!--
+Author: Ranjithprabhu K
+Page Description: Dashboard page
+Date: 05 Jan 2016
+-->
+
+<!-- Content Header (Page header) -->
+
+<style>
+
+
+
+
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+    }
+    .rating > span {
+        display: inline-block;
+        position: relative;
+        width: 1.1em;
+    }
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+        content: "\2605";
+        position: absolute;
+        left: 0;
+        color: gold;
+    }
+
+
+
+    .NotGold {
+
+    }
+    .Gold {
+        color:gold;
+    }
+    .blue {
+        color:blue;
+    }
+
+
+
+
+
+
+</style>
+<section class="content-header">
+    <h1>
+        Search For A book
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Search For A book</li>
+    </ol>
+</section>
+<div class="row" style="min-height:50px;">
+</div>
+<!-- Simple Search-->
+<section class="content" ng-show="vm.showSimple">
+    <!-- Simple Search-->
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Search For a Book
+                </div>
+                <div class="panel-body" style="height: auto;">
+                    <form data-ng-submit="vm.submitFormSimpleSearch();" name="vm.contactForm">
+                        <md-content class="autoScroll">
+
+                            <md-input-container class="md-icon-float md-block">
+                                <label>Search...</label>
+                                <md-icon class="fa fa-clipboard"></md-icon>
+
+                                <input type="text" required name="Search" ng-model="vm.bookForSimpleSearch.title">
+                            </md-input-container>
+                            <h6 class="timeline-header"><a target="_blank" ng-click="vm.showAdvancedSearch(true) ">
+                                Advanced Search</a></h6>
+
+                            <div class="pull-right">
+                                <md-button class="md-raised md-primary" type="submit"> GO <i
+                                        class="fa fa-angle-double-right"></i></md-button>
+                                <md-button class="md-raised md-warn" type="reset">Clear Search <i
+                                        class="fa fa-trash-o"></i></md-button>
+                            </div>
+                        </md-content>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+    <div class="row" style="min-height:165px;">
+
+    </div>
+</section>
+
+
+<!--Advanced Search  -->
+<section class="content" ng-show="vm.showAdvanced">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Advanced Search For a Book
+                </div>
+                <div class="panel-body" style="height: auto;">
+                    <form data-ng-submit="vm.submitFormAdvancedSearch()">
+                        <div class="autoScroll">
+
+                            <md-input-container class="md-icon-float md-block">
+                                <label>Book Title</label>
+                                <md-icon class="fa  fa-file-text-o"></md-icon>
+
+                                <input type="text" ng-model="vm.bookForSearch.title">
+                            </md-input-container>
+
+
+                            <md-input-container class="md-icon-float md-block">
+                                <label>Author</label>
+                                <md-icon class="fa fa-male"></md-icon>
+
+
+                                      <angucomplete id="ex1"
+                                                  placeholder="Search author"
+                                                  pause="100"
+                                                  selectedobject="selectedAuthor"
+                                                  localdata="vm.authorsArray"
+                                                  searchfields="name"
+                                                  titlefield="name"
+                                                  minlength="1"
+                                                  inputclass="form-control form-control-small" autocomplete="off"/>
+
+
+                               <!-- <input type="text" ng-model="vm.bookForSearch.author">-->
+                            </md-input-container>
+
+
+                            <md-input-container class="md-icon-float md-block">
+                                <label>Category</label>
+                                <md-icon class="fa fa fa-th-large"></md-icon>
+                                <angucomplete id="ex1"
+                                              placeholder="Search category"
+                                              pause="100"
+                                              selectedobject="selectedCategory"
+                                              localdata="vm.categoriesArray"
+                                              searchfields="name"
+                                              titlefield="name"
+                                              minlength="1"
+                                              inputclass="form-control form-control-small"/>
+
+                            <!--    <input type="text" ng-model="vm.bookForSearch.category">-->
+                            </md-input-container>
+
+
+                            <md-input-container class="md-icon-float md-block">
+                                <md-icon class="fa fa-font"></md-icon>
+
+                                <label>language</label>
+
+                                <angucomplete id="ex1"
+                                              placeholder="Search Language"
+                                              pause="100"
+                                              selectedobject="selectedLanguage"
+                                              localdata="vm.languagesArray"
+                                              searchfields="name"
+                                              titlefield="name"
+                                              minlength="1"
+                                              inputclass="form-control form-control-small"/>
+<!--
+                                <input type="text" ng-model="vm.bookForSearch.language">
+-->
+
+
+                            </md-input-container>
+
+<!--
+
+                            <md-input-container class="md-icon-float md-block">
+                                <md-icon class="fa fa-sort-numeric-asc"></md-icon>
+
+                                <label>From Year</label>
+
+
+
+                                <angucomplete id="ex1"
+                                              placeholder="Search Year"
+                                              pause="100"
+                                              selectedobject="selectedYear"
+                                              localdata="vm.yearsArray"
+                                              searchfields="name"
+                                              titlefield="name"
+                                              minlength="1"
+                                              inputclass="form-control form-control-small"/>
+
+                            &lt;!&ndash;    <input type="text" ng-model="vm.bookForSearch.fromYear">&ndash;&gt;
+
+
+                            </md-input-container>
+
+                            <md-input-container class="md-icon-float md-block">
+                                <md-icon class="fa fa-sort-numeric-asc"></md-icon>
+
+                                <label>To Year</label>
+
+
+                                <angucomplete id="ex1"
+                                              placeholder="Search Year"
+                                              pause="100"
+                                              selectedobject="selectedYear"
+                                              localdata="vm.yearsArray"
+                                              searchfields="name"
+                                              titlefield="name"
+                                              minlength="1"
+                                              inputclass="form-control form-control-small"/>
+                               &lt;!&ndash; <input type="text" ng-model="vm.bookForSearch.toYear">&ndash;&gt;
+
+
+                            </md-input-container>
+-->
+
+
+
+
+                        <!--    <div class="pull-left">
+
+                                <label>Publish Year:</label>
+
+                                <label>From:</label>
+
+
+                                <md-icon class="fa fa-sort-numeric-asc"></md-icon>
+
+                                <select type="text" ng-init="vm.loadYears()"
+                                        ng-options=" item.year for item in vm.arrayYears">
+                                    <option value="">Select Year</option>
+
+                                </select>
+
+
+                                <label>To:</label>
+                                <md-icon class="fa fa-sort-numeric-asc"></md-icon>
+
+                                <select type="text" ng-model="bookPublishYear"> </select>
+
+
+                                </md-input-container>
+
+                            </div>-->
+
+                            <div class="pull-left">
+                                <h6 class="timeline-header"><a target="_blank" ng-click="vm.showAdvancedSearch(false)">Return
+                                    To Simple Search</a></h6>
+                            </div>
+                            <div class="pull-right">
+                                <md-button class="md-raised md-primary" type="submit"> GO <i
+                                        class="fa fa-angle-double-right"></i></md-button>
+                                <md-button class="md-raised md-warn" type="reset">Clear Search <i
+                                        class="fa fa-trash-o"></i></md-button>
+                            </div>
+                            </md-content>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+    <div class="row" style="min-height:10px;">
+
+    </div>
+
+</section>
+
+<!-- Result Of Search -->
+<section class="content" ng-show="vm.showResults">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- The time line -->
+            <ul class="timeline">
+
+
+
+                <li class="time-label">
+                    <span class="bg-red-gradient">
+                       {{ vm.resultLength}} &nbsp; Results Of Search:
+                    </span>
+                </li>
+                <li ng-repeat="books in vm.booksArray | filter: (!disableFilter || '') && filterExpression">
+                    <i class="fa bg text-white"> {{$index+1}}</i>
+                    <div class="timeline-item">
+                        <!--<span class="time text-bold"> Available</span>-->
+                        <h3 class="timeline-header"><a href="http://kmitsolutions.com" target="_blank">
+                            {{books.title}} </a>
+
+                            <div class="rating pull-right">
+                                <span ng-class="{'Gold':  books.case >=5, 'NotGold':books.case <5}" ng-click="vm.postRate(books,'5')">☆</span>
+                                <span ng-class="{'Gold':  books.case >=4, 'NotGold':books.case <4}" ng-click="vm.postRate(books,'4')">☆</span>
+                                <span ng-class="{'Gold':  books.case >=3, 'NotGold':books.case <3}" ng-click="vm.postRate(books,'3')">☆</span>
+                                <span ng-class="{'Gold':  books.case >=2, 'NotGold':books.case <2}" ng-click="vm.postRate(books,'2')">☆</span>
+                                <span ng-class="{'Gold':  books.case >=1, 'NotGold':books.case <1}" ng-click="vm.postRate(books,'1')">☆</span>
+                            </div>
+
+
+
+
+                        </h3>
+                        <div class="timeline-body">
+
+
+                            <table>
+                                <tr>
+                                    <div>
+                                    <td>   <img src="images/recent/bookinfo.png" class=" img-lg"></td>
+                                        </div>
+                                    <td>
+                            <ul>
+                                <bold>
+                                <li> <h4>Author : {{books.author }}</h4></li>
+                                <li>Description : {{books.description}}</li>
+                                <li>Language : {{books.language}}</li>
+                                <li>Category : {{books.category}}</li>
+                                <li>Publish Year : {{books.year}}</li></bold>
+
+                            </ul>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+
+                        </div>
+
+                        <div class="timeline-footer">
+                            <p>
+
+
+                                <span ng-class="{'label label-success': books.bookStatus == 'Available', 'label label-danger':  books.bookStatus == 'Not Available'}">{{books.bookStatus}}</span>
+
+                                <span class="pull-right">
+                                    <button ng-show="books.bookStatus == 'Available'" class="btn btn-warning"
+                                            ng-click="vm.showOrderBook($event,books)">Order Book</button>
+
+
+                                     <button ng-show="books.bookStatus == 'Not Available' && vm.isToFollow(books) && books.user!=vm.user_ID" class="btn btn-twitter"
+                                             ng-click="vm.followBook($event,books,'follow')">Follow Book</button>
+
+
+                                    <button ng-show="books.bookStatus == 'Not Available' && !vm.isToFollow(books)" class="btn btn-facebook"
+                                            ng-click="vm.followBook($event,books,'unfollow')">UnFollow Book</button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li>
+                    <i class="fa fa-arrows bg-gray"></i>
+                </li>
+            </ul>
+        </div><!-- /.col -->
+    </div>
+
+
+</section><!-- /.content -->
+
+
+
+<script type="text/ng-template" id="dialog2.tmpl.html"><md-dialog aria-label="Edit Book"  ng-cloak>
+<form>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit Book</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+
+    <div>
+        <div class="md-dialog-content">
+
+
+
+
+            <form class="form-horizontal" role="form">
+               <label> aaaaaaaaaa </label>
+
+            </form>
+        </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <!--      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                      More on Wikipedia
+                  </md-button>
+                  <span flex></span>-->
+            <md-button ng-click="EditBook()">
+                Save
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Close
+            </md-button>
+        </md-dialog-actions>
+        <!--   <label>
+           </label>-->
+    </div>
+</form>
+</md-dialog>
+</script>
